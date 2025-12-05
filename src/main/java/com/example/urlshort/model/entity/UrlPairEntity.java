@@ -3,6 +3,9 @@ package com.example.urlshort.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+
+import java.time.LocalDate;
 
 @Entity
 public class UrlPairEntity {
@@ -11,6 +14,12 @@ public class UrlPairEntity {
     private Long id;
     private final String shortUrl;
     private final String url;
+    private LocalDate createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDate.now();
+    }
 
     public UrlPairEntity(String shortUrl, String url) {
         this.shortUrl = shortUrl;
@@ -27,5 +36,9 @@ public class UrlPairEntity {
 
     public String getUrl() {
         return url;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 }
