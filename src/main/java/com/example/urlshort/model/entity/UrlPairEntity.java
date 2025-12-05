@@ -12,14 +12,16 @@ public class UrlPairEntity {
     @Id
     @GeneratedValue
     private Long id;
-    private final String shortUrl;
-    private final String url;
+    private String shortUrl;
+    private String url;
     private LocalDate createdAt;
 
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDate.now();
     }
+
+    public UrlPairEntity() {}
 
     public UrlPairEntity(String shortUrl, String url) {
         this.shortUrl = shortUrl;
