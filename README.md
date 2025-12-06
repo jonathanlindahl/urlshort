@@ -1,5 +1,6 @@
 # urlshort
-Java (spring) backend for shortening urls
+Java (spring) backend for shortening urls by redirecting.
+Caches on redirect using Redis for improved performance.
 
 # Prerequisites
 - Java 21
@@ -7,7 +8,7 @@ Java (spring) backend for shortening urls
 - docker-compose
 
 # Getting started
-Run `docker compose up` in the root directory to start the database container.
+Run `docker compose up` in the root directory to start the MySQL and Redis containers.
 Run the application either by running the main class from within Intellij, or using the mvn wrapper.
 
 # Usage
