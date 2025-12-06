@@ -5,6 +5,8 @@ import com.example.urlshort.model.entity.UrlPairEntity;
 import com.example.urlshort.repository.UrlPairRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UrlPairService {
     private final UrlPairRepository urlPairRepository;
@@ -13,8 +15,8 @@ public class UrlPairService {
         this.urlPairRepository = urlPairRepository;
     }
 
-    public UrlPairDto getUrlPair(String shortUrl) {
-        return toDto(urlPairRepository.getByShortUrl(shortUrl));
+    public Optional<UrlPairDto> getUrlPair(String shortUrl) {
+        return Optional.of(toDto(urlPairRepository.getByShortUrl(shortUrl)));
     }
 
     public void saveUrlPair(UrlPairDto dto) {
