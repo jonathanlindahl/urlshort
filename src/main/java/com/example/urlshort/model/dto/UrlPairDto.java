@@ -1,6 +1,8 @@
 package com.example.urlshort.model.dto;
 
-public class UrlPairDto {
+import java.io.Serializable;
+
+public class UrlPairDto implements Serializable {
     private final String shortUrl;
     private final String url;
 
