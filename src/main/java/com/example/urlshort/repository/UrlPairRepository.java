@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UrlPairRepository extends JpaRepository<UrlPairEntity, Long> {
+    public UrlPairEntity getByShortUrl(String shortUrl);
 }
