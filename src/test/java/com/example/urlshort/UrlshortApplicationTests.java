@@ -26,18 +26,34 @@ class UrlshortApplicationTests {
     private TestRestTemplate testRestTemplate;
 
 	@Test
-	void testSaveNull() {
+	void testSaveNullOrEmpty() {
         Mockito.when(urlPairRepository.save(Mockito.any())).thenReturn(new UrlPairEntity());
 
-        UrlPairDto dto = new UrlPairDto("short", null);
         String url = "http://localhost:" + port + "/save";
-        HttpEntity<UrlPairDto> request = new HttpEntity<>(dto);
 
         Assertions.assertEquals(
             HttpStatusCode.valueOf(400),
             this.testRestTemplate.postForEntity(
-                url, request, UrlPairDto.class
+                url, new HttpEntity<>(new UrlPairDto("short", null)), UrlPairDto.class
             ).getStatusCode()
         );
-	}
+        Assertions.assertEquals(
+            HttpStatusCode.valueOf(400),
+            this.testRestTemplate.postForEntity(
+                url, new HttpEntity<>(new UrlPairDto(null, "example.com")), UrlPairDto.class
+            ).getStatusCode()
+        );
+        Assertions.assertEquals(
+            HttpStatusCode.valueOf(400),
+            this.testRestTemplate.postForEntity(
+                url, new HttpEntity<>(new UrlPairDto(null, null)), UrlPairDto.class
+            ).getStatusCode()
+        );
+        Assertions.assertEquals(
+            HttpStatusCode.valueOf(400),
+            this.testRestTemplate.postForEntity(
+                url, new HttpEntity<>(new UrlPairDto("", "")), UrlPairDto.class
+            ).getStatusCode()
+        );
+    }
 }
