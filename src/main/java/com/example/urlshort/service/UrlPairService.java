@@ -6,7 +6,9 @@ import com.example.urlshort.repository.UrlPairRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -33,6 +35,8 @@ public class UrlPairService {
     }
 
     private UrlPairEntity toEntity(UrlPairDto dto) {
+        if (dto == null || ObjectUtils.isEmpty(dto.getShortUrl()) || ObjectUtils.isEmpty(dto.getUrl()))
+            throw new NoSuchElementException();
         return new UrlPairEntity(dto.getShortUrl(), dto.getUrl());
     }
 
