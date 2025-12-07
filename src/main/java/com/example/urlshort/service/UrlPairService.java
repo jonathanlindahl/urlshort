@@ -41,6 +41,8 @@ public class UrlPairService {
     }
 
     private UrlPairDto toDto(UrlPairEntity entity) {
+        if (entity == null)
+            throw new NoSuchElementException();
         return new UrlPairDto(entity.getShortUrl(), entity.getUrl());
     }
 }

@@ -13,6 +13,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UrlshortApplicationTests {
@@ -53,6 +59,20 @@ class UrlshortApplicationTests {
             HttpStatusCode.valueOf(400),
             this.testRestTemplate.postForEntity(
                 url, new HttpEntity<>(new UrlPairDto("", "")), UrlPairDto.class
+            ).getStatusCode()
+        );
+    }
+
+    @Test
+    void testGetNull() throws URISyntaxException, MalformedURLException {
+        Mockito.when(urlPairRepository.getByShortUrl(Mockito.any())).thenReturn(null);
+
+        String url = "http://localhost:" + port + "/short";
+
+        Assertions.assertEquals(
+            HttpStatusCode.valueOf(400),
+            this.testRestTemplate.getForEntity(
+                url, String.class
             ).getStatusCode()
         );
     }
